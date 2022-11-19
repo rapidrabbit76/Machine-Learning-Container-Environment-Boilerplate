@@ -14,6 +14,11 @@ RUN apt update && apt install -y  sudo \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
+
 USER $USERNAME
+
+COPY docker/requirements.txt /experiment
+RUN pip install --no-cache-dir -r  requirements.txt
+
 
 
