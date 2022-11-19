@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  lab:
+    build:
+      context: .
+      dockerfile: docker/tensorflow/Dockerfile
+      args:
+        TAG: 2.11.0-gpu
+        USERNAME: ${USERNAME}
+        USER_UID: ${UID}
+        USER_GID: ${GID}
+    command: tail -f /dev/null
+    volumes:
+      - ./:/experiment
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+  training:
+    build:
+      context: .
+      dockerfile: docker/tensorflow/Dockerfile
+      args:
+        TAG: 2.11.0-gpu
+        USERNAME: ${USERNAME}
+        USER_UID: ${UID}
+        USER_GID: ${GID}
+    command: tail -f /dev/null
+    volumes:
+      - ./:/experiment
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
